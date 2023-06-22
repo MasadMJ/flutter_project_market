@@ -5,6 +5,7 @@ import 'package:flutter_project_market/screens/home.dart';
 import '../screens/login.dart';
 import 'snackbar.dart';
 
+String myerror = "keychain-error";
 registerToFireBase(context, emailAddress, password) async {
   try {
     await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -16,12 +17,17 @@ registerToFireBase(context, emailAddress, password) async {
         context, MaterialPageRoute(builder: (context) => const Login()));
   } on FirebaseAuthException catch (e) {
     late String error;
+    if (e.code == myerror) {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const Login()));
+    }
     if (e.code == 'weak-password') {
       error = 'The password provided is too weak.';
     } else if (e.code == 'email-already-in-use') {
       error = 'The account already exists for that email.';
     } else {
       error = "Unknown Error ${e.code}";
+      print("${e.code}");
     }
     showSnackBar(context, error);
   }
@@ -35,6 +41,11 @@ loginWithFireBase(context, emailAddress, password) async {
         context, MaterialPageRoute(builder: (context) => const HomePage()));
   } on FirebaseAuthException catch (e) {
     late String error;
+       if(e.code == myerror){
+          Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const HomePage()));
+
+    }
     if (e.code == 'user-not-found') {
       error = ('No user found for that email.');
     } else if (e.code == 'wrong-password') {

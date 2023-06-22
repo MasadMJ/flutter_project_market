@@ -17,9 +17,4 @@ const decorationTextFiled = InputDecoration(
 
 
 
- var  buttonStyle = ButtonStyle(
-     backgroundColor: MaterialStateProperty.all(Colors.orange),
-     padding: MaterialStateProperty.all(const EdgeInsets.all(12)),
-     shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-  );
 

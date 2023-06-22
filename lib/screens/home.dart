@@ -2,11 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 
-import '../shared/IteamCard.dart';
+import '../shared/iteam_card.dart';
 import '../shared/appbar.dart';
 import '../shared/colors.dart';
 import '../shared/firebase.dart';
-import '../shared/iteamsList.dart';
+import '../shared/iteams_list.dart';
 import 'checkout.dart';
 import 'details_screen.dart';
 

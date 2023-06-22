@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-
+import 'package:email_validator/email_validator.dart';
 import '../shared/colors.dart';
 import '../shared/constant.dart';
 import '../shared/firebase.dart';
 import 'home.dart';
 import 'register.dart';
- 
+
 class Login extends StatefulWidget {
   const Login({super.key});
 
@@ -32,15 +32,24 @@ class _LoginState extends State<Login> {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-         // color: Color.fromARGB(0, 255, 255, 255),
-         image: DecorationImage(image: AssetImage("lib/assets/img/main_background.jpg"),fit: BoxFit.cover),
+          // color: Color.fromARGB(0, 255, 255, 255),
+          image: DecorationImage(
+              image: AssetImage("lib/assets/img/main_background.jpg"),
+              fit: BoxFit.cover),
         ),
         child: Padding(
           padding: const EdgeInsets.all(33.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextField(
+              TextFormField(
+                  validator: (value) {
+                    return value != null && !EmailValidator.validate(value)
+                        ? "Enter a valid email"
+                        : null;
+                  },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  textInputAction: TextInputAction.next,
                   obscureText: false,
                   keyboardType: TextInputType.emailAddress,
                   controller: emaillController,
@@ -51,9 +60,10 @@ class _LoginState extends State<Login> {
                 height: 20,
               ),
               TextField(
-                      obscureText: showPassword ? false : true,
+                  obscureText: showPassword ? false : true,
                   controller: passwordController,
                   keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.done,
                   decoration: decorationTextFiled.copyWith(
                       suffixIcon: IconButton(
                           onPressed: () {
