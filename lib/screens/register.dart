@@ -58,7 +58,7 @@ class _RegisterState extends State<Register> {
       appBar: AppBar(
         backgroundColor: appbarGreen,
         centerTitle: false,
-        title: Text("Reset password"),
+        title: Text("Register"),
       ),
       
       body: Container(
