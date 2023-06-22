@@ -53,14 +53,12 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appbarGreen,
         centerTitle: false,
         title: Text("Register"),
       ),
-      
       body: Container(
         height: double.infinity,
         decoration: const BoxDecoration(
@@ -163,6 +161,7 @@ class _RegisterState extends State<Register> {
                           });
                           await registerToFireBase(context,
                               emaillController.text, passwordController.text);
+                          isLoadding = !isLoadding;
                         } else {
                           showSnackBar(context, "Error in deatils");
                         }

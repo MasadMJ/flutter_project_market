@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_project_market/screens/reset_password.dart';
+import 'package:flutter_project_market/screens/verify_email.dart';
 import '../shared/colors.dart';
 import '../shared/constant.dart';
 import '../shared/firebase.dart';
@@ -92,6 +93,8 @@ class _LoginState extends State<Login> {
                   });
                   await loginWithFireBase(
                       context, emaillController.text, passwordController.text);
+                          Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const VerifyEmailView()));
                   setState(() {
                     isLoadding = !isLoadding;
                   });
@@ -123,7 +126,7 @@ class _LoginState extends State<Login> {
                             builder: (context) => const ResetPasswordView()));
                   },
                   child: const Text('Forgot your password?',
-                      style: TextStyle( fontSize: 18 ,decoration: TextDecoration.underline , color: Colors.white)),
+                      style: TextStyle( fontSize: 16 ,decoration: TextDecoration.underline , color: Colors.white)),
                 ),
 
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [

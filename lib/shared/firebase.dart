@@ -30,6 +30,7 @@ registerToFireBase(context, emailAddress, password) async {
       print("${e.code}");
     }
     showSnackBar(context, error);
+    
   }
 }
 
@@ -39,10 +40,9 @@ loginWithFireBase(context, emailAddress, password) async {
         .signInWithEmailAndPassword(email: emailAddress, password: password);
   } on FirebaseAuthException catch (e) {
     late String error;
-       if(e.code == myerror){
-          Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const HomePage()));
-
+    if (e.code == myerror) {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const HomePage()));
     }
     if (e.code == 'user-not-found') {
       error = ('No user found for that email.');
@@ -60,14 +60,20 @@ logOutFireBase(context) async {
 }
 
 resetPasswordFireBase(String email) async {
-  try{
-  await FirebaseAuth.instance
-    .sendPasswordResetEmail(email: email);
+  try {
+    await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
     return "Rest Email sent";
-
-  }catch(e){
+  } catch (e) {
     return e.toString();
   }
 }
 
-
+sendVerificationEmail(context) async {
+  try {
+    await FirebaseAuth.instance.currentUser!.sendEmailVerification();
+    await Future.delayed(Duration(seconds: 5));
+  } catch (e) {
+      print(e);
+    showSnackBar(context, e.toString());
+  }
+}
