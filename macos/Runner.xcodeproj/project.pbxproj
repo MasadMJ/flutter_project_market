@@ -27,7 +27,7 @@
 		33CC10F32044A3C60003C045 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33CC10F22044A3C60003C045 /* Assets.xcassets */; };
 		33CC10F62044A3C60003C045 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 33CC10F42044A3C60003C045 /* MainMenu.xib */; };
 		33CC11132044BFA00003C045 /* MainFlutterWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CC11122044BFA00003C045 /* MainFlutterWindow.swift */; };
-		7472881A2A448FA400D9026E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 747288192A448FA400D9026E /* GoogleService-Info.plist */; };
+		747139E42A44D3A3000D7246 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 747139E32A44D3A3000D7246 /* GoogleService-Info.plist */; };
 		B6BAEEA3FC58694CF8C3DEEF /* Pods_RunnerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 336FBDC64B11A39DDBFDDDFD /* Pods_RunnerTests.framework */; };
 		F84529C28DC411FABAFCC374 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFDC6DDBC9AAD166016F7B9 /* Pods_Runner.framework */; };
 /* End PBXBuildFile section */
@@ -85,7 +85,7 @@
 		3FE23A12D357847D1AD81822 /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
 		419E89AB35428EAEC9F3D933 /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		60A8C1C3E805B68AEA5B2E86 /* Pods-RunnerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.release.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.release.xcconfig"; sourceTree = "<group>"; };
-		747288192A448FA400D9026E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/assets 2/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		747139E32A44D3A3000D7246 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7AFA3C8E1D35360C0083082E /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		9740EEB21CF90195004384FC /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		981D86747B5DB033E9D91F27 /* Pods-RunnerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.debug.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -177,7 +177,7 @@
 		33FAB671232836740065AC1E /* Runner */ = {
 			isa = PBXGroup;
 			children = (
-				747288192A448FA400D9026E /* GoogleService-Info.plist */,
+				747139E32A44D3A3000D7246 /* GoogleService-Info.plist */,
 				33CC10F02044A3C60003C045 /* AppDelegate.swift */,
 				33CC11122044BFA00003C045 /* MainFlutterWindow.swift */,
 				33E51913231747F40026EE4D /* DebugProfile.entitlements */,
@@ -318,7 +318,7 @@
 			files = (
 				33CC10F32044A3C60003C045 /* Assets.xcassets in Resources */,
 				33CC10F62044A3C60003C045 /* MainMenu.xib in Resources */,
-				7472881A2A448FA400D9026E /* GoogleService-Info.plist in Resources */,
+				747139E42A44D3A3000D7246 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

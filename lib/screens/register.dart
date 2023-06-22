@@ -53,7 +53,14 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: appbarGreen,
+        centerTitle: false,
+        title: Text("Reset password"),
+      ),
+      
       body: Container(
         height: double.infinity,
         decoration: const BoxDecoration(

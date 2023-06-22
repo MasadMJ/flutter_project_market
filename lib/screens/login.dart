@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter_project_market/screens/reset_password.dart';
 import '../shared/colors.dart';
 import '../shared/constant.dart';
 import '../shared/firebase.dart';
@@ -30,6 +31,12 @@ class _LoginState extends State<Login> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: appbarGreen,
+        centerTitle: false,
+        title: Text("Login"),
+      ),
+      
       body: Container(
         decoration: const BoxDecoration(
           // color: Color.fromARGB(0, 255, 255, 255),
@@ -100,13 +107,25 @@ class _LoginState extends State<Login> {
                         color: Colors.white,
                       )
                     : const Text(
-                        "Sign in",
+                        "Sign In",
                         style: TextStyle(fontSize: 19),
                       ),
               ),
               const SizedBox(
                 height: 20,
               ),
+
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ResetPasswordView()));
+                  },
+                  child: const Text('Forgot your password?',
+                      style: TextStyle( fontSize: 18 ,decoration: TextDecoration.underline , color: Colors.white)),
+                ),
+
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 const Text(
                   "Do not have an account?",
@@ -119,8 +138,8 @@ class _LoginState extends State<Login> {
                         MaterialPageRoute(
                             builder: (context) => const Register()));
                   },
-                  child: const Text('Sign up',
-                      style: TextStyle(color: Colors.black, fontSize: 18)),
+                  child: const Text('Sign Up',
+                      style: TextStyle(color: Colors.white, fontSize: 18,decoration: TextDecoration.underline)),
                 ),
               ])
             ],

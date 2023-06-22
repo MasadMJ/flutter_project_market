@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_market/screens/home.dart';
+import 'package:flutter_project_market/shared/snackbar.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'provider/cart.dart';
+import 'screens/login.dart';
 import 'screens/register.dart';
 
 Future<void> main() async {
@@ -23,9 +26,25 @@ class MyApp extends StatelessWidget {
       create: (context) {
         return Cart();
       },
-      child: const MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Register(),
+        home: StreamBuilder(
+          stream: FirebaseAuth.instance.userChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                  child: CircularProgressIndicator(
+                color: Colors.white,
+              ));
+            } else if (snapshot.hasError) {
+              return showSnackBar(context, "Something went wrong");
+            } else if (snapshot.hasData) {
+              return const HomePage();
+            } else {
+              return const Login();
+            }
+          },
+        ),
       ),
     );
   }

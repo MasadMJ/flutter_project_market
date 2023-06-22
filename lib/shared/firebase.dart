@@ -37,8 +37,6 @@ loginWithFireBase(context, emailAddress, password) async {
   try {
     await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: emailAddress, password: password);
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const HomePage()));
   } on FirebaseAuthException catch (e) {
     late String error;
        if(e.code == myerror){
@@ -59,6 +57,17 @@ loginWithFireBase(context, emailAddress, password) async {
 
 logOutFireBase(context) async {
   await FirebaseAuth.instance.signOut();
-  Navigator.pushReplacement(
-      context, MaterialPageRoute(builder: (context) => const Login()));
 }
+
+resetPasswordFireBase(String email) async {
+  try{
+  await FirebaseAuth.instance
+    .sendPasswordResetEmail(email: email);
+    return "Rest Email sent";
+
+  }catch(e){
+    return e.toString();
+  }
+}
+
+
