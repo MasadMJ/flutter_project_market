@@ -7,7 +7,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'provider/cart.dart';
+import 'provider/google_signin.dart';
 import 'screens/login.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,10 +25,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) {
-        return Cart();
-      },
+      return MultiProvider(
+    providers: [
+    ChangeNotifierProvider(create: (context) {
+    return Cart();
+    }),
+    ChangeNotifierProvider(create: (context) {
+     return GoogleSignInProvider();
+    }),
+    ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: StreamBuilder(
