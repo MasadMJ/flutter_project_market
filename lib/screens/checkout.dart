@@ -23,7 +23,7 @@ class CheckOut extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              height: 550,
+              height: 500,
               child: ListView.builder(
                   itemCount: cartBag.iteamCount,
                   itemBuilder: (BuildContext context, int index) {
@@ -48,9 +48,7 @@ class CheckOut extends StatelessWidget {
                     );
                   }),
             ),
-            const SizedBox(
-              height: 10,
-            ),
+       
             if (cartBag.getPrice() > 0)
               ElevatedButton.icon(
                 onPressed: () {},
