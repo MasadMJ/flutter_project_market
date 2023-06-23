@@ -61,6 +61,7 @@ class _GetDataFromFirestoreState extends State<GetDataFromFirestore> {
                     TextButton(
                         onPressed: () {
                           // addnewtask();
+                        
                           Navigator.pop(context);
                         },
                         child: Text(
@@ -75,6 +76,9 @@ class _GetDataFromFirestoreState extends State<GetDataFromFirestore> {
         );
       },
     );
+
+
+   
   }
 
   @override
@@ -98,7 +102,6 @@ class _GetDataFromFirestoreState extends State<GetDataFromFirestore> {
               snapshot.data!.data() as Map<String, dynamic>;
           return Container(
             width: double.infinity,
-            padding: const EdgeInsets.only(top: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -108,7 +111,7 @@ class _GetDataFromFirestoreState extends State<GetDataFromFirestore> {
                     Text(
                       "Email: ${data['email']}",
                       style: const TextStyle(
-                        fontSize: 17,
+                        fontSize: 15,
                       ),
                     ),
                     IconButton(
@@ -118,16 +121,13 @@ class _GetDataFromFirestoreState extends State<GetDataFromFirestore> {
                         icon: Icon(Icons.edit))
                   ],
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       "Password: ${data['password']}",
                       style: const TextStyle(
-                        fontSize: 17,
+                        fontSize: 15,
                       ),
                     ),
                     IconButton(
@@ -137,27 +137,33 @@ class _GetDataFromFirestoreState extends State<GetDataFromFirestore> {
                         icon: Icon(Icons.edit))
                   ],
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       "Username: ${data['username']}",
                       style: const TextStyle(
-                        fontSize: 17,
+                        fontSize: 15,
                       ),
                     ),
-                    IconButton(
-                        onPressed: () {
-                          myDialog(data, 'username');
-                        },
-                        icon: Icon(Icons.edit))
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              setState(() {
+                                deleteField("username");
+                              });
+                            },
+                            icon: Icon(Icons.delete)),
+                        IconButton(
+                            onPressed: () {
+                              myDialog(data, 'username');
+                            },
+                            icon: Icon(Icons.edit)),
+                      ],
+                    )
                   ],
-                ),
-                const SizedBox(
-                  height: 10,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -165,18 +171,27 @@ class _GetDataFromFirestoreState extends State<GetDataFromFirestore> {
                     Text(
                       "Age: ${data['age']}",
                       style: const TextStyle(
-                        fontSize: 17,
+                        fontSize: 15,
                       ),
                     ),
-                    IconButton(
-                        onPressed: () {
-                          myDialog(data, 'age');
-                        },
-                        icon: Icon(Icons.edit))
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              setState(() {
+                                deleteField("age");
+                              });
+                            },
+                            icon: Icon(Icons.delete)),
+                        IconButton(
+                            onPressed: () {
+                              myDialog(data, 'age');
+                            },
+                            icon: Icon(Icons.edit)),
+                      ],
+                    )
                   ],
-                ),
-                const SizedBox(
-                  height: 10,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -184,16 +199,38 @@ class _GetDataFromFirestoreState extends State<GetDataFromFirestore> {
                     Text(
                       "Title: ${data['title']}",
                       style: const TextStyle(
-                        fontSize: 17,
+                        fontSize: 15,
                       ),
                     ),
-                    IconButton(
-                        onPressed: () {
-                          myDialog(data, 'title');
-                        },
-                        icon: Icon(Icons.edit))
+                    Row(
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              setState(() {
+                                deleteField("title");
+                              });
+                            },
+                            icon: Icon(Icons.delete)),
+                        IconButton(
+                            onPressed: () {
+                              myDialog(data, 'title');
+                            },
+                            icon: Icon(Icons.edit)),
+                      ],
+                    )
                   ],
                 ),
+                Center(
+                    child: TextButton(
+                        onPressed: () {
+                          setState(() {
+                            deleteDocAllDoc();
+                          });
+                        },
+                        child: Text("Delete Data",
+                            style: TextStyle(
+                                fontSize: 15,
+                                decoration: TextDecoration.underline))))
               ],
             ),
           );

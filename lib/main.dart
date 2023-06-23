@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
             } else if (snapshot.hasError) {
               return showSnackBar(context, "Something went wrong");
             } else if (snapshot.hasData) {
-              return const VerifyEmailView();
+              return const HomePage();
             } else {
               return const Login();
             }

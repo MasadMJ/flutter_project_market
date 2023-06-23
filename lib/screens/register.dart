@@ -190,7 +190,9 @@ class _RegisterState extends State<Register> {
                           });
                           await registerToFireBase(context,
                               emaillController.text, passwordController.text,usernameController.text,titleController.text,ageController.text);
-                          isLoadding = !isLoadding;
+                                                   setState(() {
+                            isLoadding = !isLoadding;
+                          });
                         } else {
                           showSnackBar(context, "Error in deatils");
                         }

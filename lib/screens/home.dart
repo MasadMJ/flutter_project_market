@@ -27,7 +27,7 @@ class HomePage extends StatelessWidget {
               children: [
                  UserAccountsDrawerHeader(
                   accountName: Text(
-                    "${ ("name")}",
+                    "${getAuthInfo("name")}",
                     style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                   accountEmail: Text(

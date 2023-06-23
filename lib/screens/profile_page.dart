@@ -19,7 +19,6 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final credential = FirebaseAuth.instance.currentUser;
   final dataFirestore = GetDataFromFirestore(getAuthInfo("uid"));
-  
 
   @override
   Widget build(BuildContext context) {
@@ -73,33 +72,45 @@ class _ProfilePageState extends State<ProfilePage> {
                     height: 11,
                   ),
                   Text(
-                    "Email:\n${getAuthInfo("email")}   ",
+                    "Email: ${getAuthInfo("email")}   ",
                     style: TextStyle(
-                      fontSize: 17,
+                      fontSize: 15,
                     ),
                   ),
                   SizedBox(
                     height: 11,
                   ),
                   Text(
-                    "Created date: \n${getAuthInfo("created")}      ",
+                    "Created date: ${getAuthInfo("created")}      ",
                     style: TextStyle(
-                      fontSize: 17,
+                      fontSize: 15,
                     ),
                   ),
                   SizedBox(
                     height: 11,
                   ),
                   Text(
-                    "Last Signed In:\n${getAuthInfo("lastsignin")} ",
+                    "Last Signed In:${getAuthInfo("lastsignin")} ",
                     style: TextStyle(
-                      fontSize: 17,
+                      fontSize: 15,
                     ),
                   ),
+                  Center(
+                      child: TextButton(
+                          onPressed: () {
+                            setState(() {
+                              deleteFirebaseAuth();
+                            });
+                            Navigator.pop(context);
+                          },
+                          child: Text("Delete Account",
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  decoration: TextDecoration.underline))))
                 ],
               ),
               SizedBox(
-                height: 55,
+                height: 10,
               ),
               Center(
                   child: Container(
@@ -113,10 +124,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           fontSize: 20,
                         ),
                       ))),
-            dataFirestore,
-      
-           
-            
+              dataFirestore,
             ],
           ),
         ),

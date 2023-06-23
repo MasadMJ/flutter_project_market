@@ -8,6 +8,10 @@ import '../screens/login.dart';
 import '../screens/verify_email.dart';
 import 'snackbar.dart';
 
+final userINFO = FirebaseAuth.instance.currentUser!;
+  final userDB =
+      FirebaseFirestore.instance.collection('users');
+
 String myerror = "keychain-error";
 registerToFireBase(
     context, emailAddress, password, username, title, age) async {
@@ -15,6 +19,7 @@ registerToFireBase(
     final userINFO = await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: emailAddress,
       password: password,
+    
     );
     saveData(userINFO.user!.uid, emailAddress, password, username, title, age);
     showSnackBar(context, "Account Created");
@@ -43,8 +48,8 @@ loginWithFireBase(context, emailAddress, password) async {
   try {
     await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: emailAddress, password: password);
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) => const HomePage()));
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const HomePage()));
   } on FirebaseAuthException catch (e) {
     late String error;
     if (e.code == myerror) {
@@ -77,7 +82,7 @@ resetPasswordFireBase(String email) async {
 
 sendVerificationEmail(context) async {
   try {
-    await FirebaseAuth.instance.currentUser!.sendEmailVerification();
+    await userINFO.sendEmailVerification();
     await Future.delayed(Duration(seconds: 5));
   } catch (e) {
     print(e);
@@ -86,7 +91,6 @@ sendVerificationEmail(context) async {
 }
 
 getAuthInfo(type) {
-  final userINFO = FirebaseAuth.instance.currentUser!;
   switch (type) {
     case "email":
       return userINFO.email;
@@ -119,4 +123,50 @@ saveData(uid, email, password, username, title, age) async {
       })
       .then((value) => print("User Added"))
       .catchError((error) => print("Failed to add user: $error"));
+}
+
+
+//Delete a field in document [firestore]
+deleteField(field)  {
+     userDB.doc(userINFO!.uid).update({field: FieldValue.delete()});
+}
+
+
+//Delete a document [firestore]
+deleteDocAllDoc()  {
+  userDB.doc(userINFO!.uid).delete();
+}
+
+//Delete user [firebase auth]
+deleteFirebaseAuth()  {
+     userINFO!.delete();
+}
+
+
+
+
+
+
+
+Future<dynamic> getFieldFromDocument(String documentId, String fieldName) async {
+  try {
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(documentId)
+        .get();
+
+    if (snapshot.exists) {
+      Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+      if (data != null && data.containsKey(fieldName)) {
+        dynamic fieldValue = data[fieldName];
+        return fieldValue;
+      } else {
+        return null; // Field doesn't exist
+      }
+    } else {
+      return null; // Document doesn't exist
+    }
+  } catch (e) {
+    return null; // Something went wrong
+  }
 }
