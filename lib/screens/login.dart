@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter_project_market/screens/reset_password.dart';
 import 'package:flutter_project_market/screens/verify_email.dart';
+import 'package:flutter_project_market/shared/checks.dart';
 import '../shared/colors.dart';
 import '../shared/constant.dart';
 import '../shared/firebase.dart';
@@ -52,7 +52,7 @@ class _LoginState extends State<Login> {
             children: [
               TextFormField(
                   validator: (value) {
-                    return value != null && !EmailValidator.validate(value)
+                    return value != null && !emailVaild(value)
                         ? "Enter a valid email"
                         : null;
                   },
@@ -93,8 +93,6 @@ class _LoginState extends State<Login> {
                   });
                   await loginWithFireBase(
                       context, emaillController.text, passwordController.text);
-                          Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const VerifyEmailView()));
                   setState(() {
                     isLoadding = !isLoadding;
                   });

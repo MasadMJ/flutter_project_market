@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project_market/screens/home.dart';
 
 import '../screens/login.dart';
+import '../screens/verify_email.dart';
 import 'snackbar.dart';
 
 String myerror = "keychain-error";
@@ -30,7 +31,6 @@ registerToFireBase(context, emailAddress, password) async {
       print("${e.code}");
     }
     showSnackBar(context, error);
-    
   }
 }
 
@@ -38,6 +38,8 @@ loginWithFireBase(context, emailAddress, password) async {
   try {
     await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: emailAddress, password: password);
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) => const VerifyEmailView()));
   } on FirebaseAuthException catch (e) {
     late String error;
     if (e.code == myerror) {
@@ -55,7 +57,7 @@ loginWithFireBase(context, emailAddress, password) async {
   }
 }
 
-logOutFireBase(context) async {
+logOutFireBase() async {
   await FirebaseAuth.instance.signOut();
 }
 
@@ -73,7 +75,7 @@ sendVerificationEmail(context) async {
     await FirebaseAuth.instance.currentUser!.sendEmailVerification();
     await Future.delayed(Duration(seconds: 5));
   } catch (e) {
-      print(e);
+    print(e);
     showSnackBar(context, e.toString());
   }
 }
