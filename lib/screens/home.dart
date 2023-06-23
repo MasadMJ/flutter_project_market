@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +11,7 @@ import '../shared/firebase.dart';
 import '../shared/iteams_list.dart';
 import 'checkout.dart';
 import 'details_screen.dart';
+import 'profile_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -22,13 +25,13 @@ class HomePage extends StatelessWidget {
           children: [
             Column(
               children: [
-                const UserAccountsDrawerHeader(
+                 UserAccountsDrawerHeader(
                   accountName: Text(
-                    "Masad jo",
+                    "${ ("name")}",
                     style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                   accountEmail: Text(
-                    "masad@gmail.com",
+                    "${getAuthInfo("email")}",
                     style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                   currentAccountPicture: CircleAvatar(
@@ -62,6 +65,19 @@ class HomePage extends StatelessWidget {
                     title: const Text("About"),
                     leading: const Icon(Icons.help_center),
                     onTap: () {}),
+
+                                    ListTile(
+                      title: Text("Profile Page"),
+                      leading: Icon(Icons.person),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProfilePage(),
+                          ),
+                        );
+                      }),
+                      
                 ListTile(
                     title: const Text("Logout"),
                     leading: const Icon(Icons.exit_to_app),

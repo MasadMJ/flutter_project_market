@@ -19,7 +19,9 @@ class _RegisterState extends State<Register> {
   final _formKey = GlobalKey<FormState>();
   final emaillController = TextEditingController();
   final passwordController = TextEditingController();
-
+  final titleController = TextEditingController();
+  final ageController = TextEditingController();
+  final usernameController = TextEditingController();
   bool uppercase = false;
   bool digits = false;
   bool lowercase = false;
@@ -33,6 +35,9 @@ class _RegisterState extends State<Register> {
   void dispose() {
     emaillController.dispose();
     passwordController.dispose();
+    ageController.dispose();
+    usernameController.dispose();
+    titleController.dispose();
     super.dispose();
   }
 
@@ -58,6 +63,7 @@ class _RegisterState extends State<Register> {
         backgroundColor: appbarGreen,
         centerTitle: false,
         title: Text("Register"),
+        elevation: 0,
       ),
       body: Container(
         height: double.infinity,
@@ -69,7 +75,7 @@ class _RegisterState extends State<Register> {
         ),
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
             child: SingleChildScrollView(
               child: Form(
                 key: _formKey,
@@ -79,9 +85,32 @@ class _RegisterState extends State<Register> {
                         obscureText: false,
                         keyboardType: TextInputType.text,
                         textInputAction: TextInputAction.next,
+                        controller: usernameController,
                         decoration: decorationTextFiled.copyWith(
                             suffixIcon: const Icon(Icons.person),
                             hintText: "Enter your Username")),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                        obscureText: false,
+                        keyboardType: TextInputType.text,
+                        controller: ageController,
+                        textInputAction: TextInputAction.next,
+                        decoration: decorationTextFiled.copyWith(
+                            suffixIcon: const Icon(Icons.face),
+                            hintText: "Enter your age")),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                        obscureText: false,
+                        keyboardType: TextInputType.text,
+                        controller: titleController,
+                        textInputAction: TextInputAction.next,
+                        decoration: decorationTextFiled.copyWith(
+                            suffixIcon: const Icon(Icons.title),
+                            hintText: "Enter your title")),
                     const SizedBox(
                       height: 20,
                     ),
@@ -160,7 +189,7 @@ class _RegisterState extends State<Register> {
                             isLoadding = !isLoadding;
                           });
                           await registerToFireBase(context,
-                              emaillController.text, passwordController.text);
+                              emaillController.text, passwordController.text,usernameController.text,titleController.text,ageController.text);
                           isLoadding = !isLoadding;
                         } else {
                           showSnackBar(context, "Error in deatils");

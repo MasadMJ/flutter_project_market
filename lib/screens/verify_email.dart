@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_market/screens/home.dart';
+import 'package:flutter_project_market/screens/login.dart';
 import 'package:flutter_project_market/shared/snackbar.dart';
 
 import '../shared/colors.dart';
@@ -99,7 +100,10 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                       if (timer2 == null) {
                         timerResend();
                       }
-                      canResendEmail ? resendEmail() : showSnackBar(context, "Please wait ${timeResendEnable.inMinutes} Minutes and try again");
+                      canResendEmail
+                          ? resendEmail()
+                          : showSnackBar(context,
+                              "Please wait ${timeResendEnable.inMinutes} Minutes and try again");
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(bTNgreen),
@@ -117,8 +121,10 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                     height: 11,
                   ),
                   TextButton(
-                    onPressed: () {
-                      FirebaseAuth.instance.signOut();
+                    onPressed: () async {
+                      await logOutFireBase();
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => Login()));
                     },
                     // style: ButtonStyle(
                     //   backgroundColor: MaterialStateProperty.all(bTNpink),
@@ -127,7 +133,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                     //       borderRadius: BorderRadius.circular(8))),
                     // ),
                     child: const Text(
-                      "Cansel",
+                      "Cancel",
                       style: TextStyle(fontSize: 20),
                     ),
                   ),
