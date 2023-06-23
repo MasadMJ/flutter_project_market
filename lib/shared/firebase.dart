@@ -14,8 +14,9 @@ registerToFireBase(context, emailAddress, password) async {
       password: password,
     );
     showSnackBar(context, "Account Created");
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const Login()));
+    loginWithFireBase(context, emailAddress, password);
+    // Navigator.pushReplacement(
+    //     context, MaterialPageRoute(builder: (context) => const Login()));
   } on FirebaseAuthException catch (e) {
     late String error;
     if (e.code == myerror) {

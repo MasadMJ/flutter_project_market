@@ -16,6 +16,7 @@ class VerifyEmailView extends StatefulWidget {
 }
 
 class _VerifyEmailViewState extends State<VerifyEmailView> {
+  Duration timeResendEnable = const Duration(minutes: 1);
   bool isEmailVerified = false;
   bool canResendEmail = false;
   Timer? timer;
@@ -27,9 +28,9 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
     isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
 
     if (!isEmailVerified) {
-      sendVerificationEmail(context);
+      //sendVerificationEmail(context);
 
-      timer = Timer.periodic(Duration(seconds: 3), (timer) async {
+      timer = Timer.periodic(const Duration(seconds: 3), (timer) async {
         // when we click on the link that existed on yahoo
         await FirebaseAuth.instance.currentUser!.reload();
 
@@ -47,14 +48,13 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     timer?.cancel();
     timer2?.cancel();
     super.dispose();
   }
 
   timerResend() {
-    timer2 = Timer.periodic(Duration(minutes: 1), (timer) {
+    timer2 = Timer.periodic(timeResendEnable, (timer) {
       canResendEmail = !canResendEmail;
       timer.cancel();
     });
@@ -64,22 +64,20 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
     setState(() {
       canResendEmail = false;
     });
-
-    await sendVerificationEmail(
-      context,
-    );
+    // await sendVerificationEmail(
+    //   context,
+    // );
     showSnackBar(context, "Email Resent");
-
     timerResend();
   }
 
   @override
   Widget build(BuildContext context) {
     return isEmailVerified
-        ? HomePage()
+        ? const HomePage()
         : Scaffold(
             appBar: AppBar(
-              title: Text("Verify Email"),
+              title: const Text("Verify Email"),
               elevation: 0,
               backgroundColor: appbarGreen,
             ),
@@ -88,12 +86,12 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     "A verification email has been sent to your email",
                     style: TextStyle(fontSize: 20),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
                   ElevatedButton(
@@ -101,20 +99,21 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                       if (timer2 == null) {
                         timerResend();
                       }
-                      canResendEmail ? resendEmail() : null;
+                      canResendEmail ? resendEmail() : showSnackBar(context, "Please wait ${timeResendEnable.inMinutes} Minutes and try again");
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(bTNgreen),
-                      padding: MaterialStateProperty.all(EdgeInsets.all(12)),
+                      padding:
+                          MaterialStateProperty.all(const EdgeInsets.all(12)),
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8))),
                     ),
-                    child: Text(
+                    child: const Text(
                       "Resent Email",
                       style: TextStyle(fontSize: 20),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 11,
                   ),
                   TextButton(
@@ -127,7 +126,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                     //   shape: MaterialStateProperty.all(RoundedRectangleBorder(
                     //       borderRadius: BorderRadius.circular(8))),
                     // ),
-                    child: Text(
+                    child: const Text(
                       "Cansel",
                       style: TextStyle(fontSize: 20),
                     ),
