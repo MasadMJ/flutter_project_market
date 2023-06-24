@@ -13,5 +13,6 @@ A Flutter Application
   <img src="./screenshots/login.png" width="200" height="350" title="login">
   <img src="./screenshots/register.png" width="200" height="350" title="register">
   <img src="./screenshots/reset_password.png" width="200" height="350" title="resetpassword">
+  <img src="./screenshots/verify.png" width="200" height="350" title="verify">
   <img src="./screenshots/profile.png" width="200" height="350" title="profile">
 </div>
