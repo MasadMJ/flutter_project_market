@@ -29,7 +29,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
     isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
 
     if (!isEmailVerified) {
-    //  sendVerificationEmail(context);
+    sendVerificationEmail(context);
 
       timer = Timer.periodic(const Duration(seconds: 3), (timer) async {
         // when we click on the link that existed on yahoo
@@ -123,8 +123,10 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                   TextButton(
                     onPressed: () async {
                       await logOutFireBase();
+                       if (context.mounted) return;
                       Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => Login()));
+                          MaterialPageRoute(builder: (context) => const Login()));
+                          
                     },
                     // style: ButtonStyle(
                     //   backgroundColor: MaterialStateProperty.all(bTNpink),

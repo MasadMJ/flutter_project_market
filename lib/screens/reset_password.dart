@@ -22,7 +22,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
       appBar: AppBar(
         backgroundColor: appbarGreen,
         centerTitle: false,
-        title: Text("Reset password"),
+        title: const Text("Reset password"),
       ),
       body: Form(
         key: _formKey,
@@ -71,10 +71,10 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                       borderRadius: BorderRadius.circular(8))),
                 ),
                 child: isLoadding
-                    ? CircularProgressIndicator(
+                    ? const CircularProgressIndicator(
                         color: Colors.white,
                       )
-                    : Text(
+                    : const Text(
                         "Reset",
                         style: TextStyle(fontSize: 19),
                       ),

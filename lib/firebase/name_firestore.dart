@@ -25,9 +25,7 @@ class GetNameFromFirestore extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;
-          return Container(
-            //  width: double.infinity,
-              child: Text(data['username'],style: const TextStyle(fontSize: 20, color: Colors.white)));
+          return Text(data['username'],style: const TextStyle(fontSize: 20, color: Colors.white));
         }
 
         return const Text("loading");

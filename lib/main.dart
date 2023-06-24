@@ -4,12 +4,10 @@ import 'package:flutter_project_market/screens/verify_email.dart';
 import 'package:flutter_project_market/shared/snackbar.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'provider/cart.dart';
 import 'provider/google_signin.dart';
 import 'screens/login.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,7 +45,7 @@ class MyApp extends StatelessWidget {
             } else if (snapshot.hasError) {
               return showSnackBar(context, "Something went wrong");
             } else if (snapshot.hasData) {
-              return const HomePage();
+              return const VerifyEmailView();
             } else {
               return const Login();
             }

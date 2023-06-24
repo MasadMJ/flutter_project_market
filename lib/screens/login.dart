@@ -1,6 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_project_market/screens/reset_password.dart';
@@ -10,7 +8,6 @@ import '../provider/google_signin.dart';
 import '../shared/colors.dart';
 import '../shared/constant.dart';
 import '../firebase/firebase.dart';
-import 'home.dart';
 import 'register.dart';
 import 'package:provider/provider.dart';
 
@@ -34,13 +31,14 @@ class _LoginState extends State<Login> {
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     final googleSignInProvider = Provider.of<GoogleSignInProvider>(context);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: appbarGreen,
           centerTitle: false,
-          title: Text("Login"),
+          title: const Text("Login"),
         ),
         body: Container(
             decoration: const BoxDecoration(
@@ -153,7 +151,7 @@ class _LoginState extends State<Login> {
                                 decoration: TextDecoration.underline)),
                       ),
                     ]),
-                    SizedBox(
+                    const SizedBox(
                       width: double.infinity,
                       child: Row(
                         children: [
@@ -173,22 +171,22 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 27),
+                      margin: const EdgeInsets.symmetric(vertical: 27),
                       child: GestureDetector(
                         onTap: () {
                           googleSignInProvider.googlelogin();
                         },
                         child: Container(
-                          padding: EdgeInsets.all(13),
+                          padding: const EdgeInsets.all(13),
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               border: Border.all(
                                   // color: Colors.purple,
-                                  color: Color.fromARGB(255, 200, 67, 79),
+                                  color: const Color.fromARGB(255, 200, 67, 79),
                                   width: 1)),
                           child: SvgPicture.asset(
                             "lib/assets/icons/google.svg",
-                            color: Color.fromARGB(255, 200, 67, 79),
+                            color: redNice,
                             height: 27,
                           ),
                         ),

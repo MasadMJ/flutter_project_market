@@ -1,8 +1,4 @@
-// ignore_for_file: prefer_const_constructors
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 
 import '../firebase/img_firestore.dart';
 import '../firebase/name_firestore.dart';
@@ -23,25 +19,25 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       drawer: Drawer(
         child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
               children: [
-                 UserAccountsDrawerHeader(
+                UserAccountsDrawerHeader(
                   accountName: GetNameFromFirestore(getAuthInfo("uid")),
-            
+
                   accountEmail: Text(
                     "${getAuthInfo("email")}",
-                    style: TextStyle(fontSize: 20, color: Colors.white),
+                    style: const TextStyle(fontSize: 20, color: Colors.white),
                   ),
-                  currentAccountPicture: GetImgFromFirestore(getAuthInfo("uid")),
-                // currentAccountPictureSize: Size(100, 80),
-                  decoration: BoxDecoration(
+                  currentAccountPicture:
+                      GetImgFromFirestore(getAuthInfo("uid")),
+                  // currentAccountPictureSize: Size(100, 80),
+                  decoration: const BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage("lib/assets/img/background.jpg"),
                           fit: BoxFit.cover)),
-                               ),
-                
+                ),
                 ListTile(
                     title: const Text("Home"),
                     leading: const Icon(Icons.home),
@@ -64,26 +60,22 @@ class HomePage extends StatelessWidget {
                     title: const Text("About"),
                     leading: const Icon(Icons.help_center),
                     onTap: () {}),
-
-                                    ListTile(
-                      title: Text("Profile Page"),
-                      leading: Icon(Icons.person),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ProfilePage(),
-                          ),
-                        );
-                      }),
-                      
+                ListTile(
+                    title: const Text("Profile Page"),
+                    leading: const Icon(Icons.person),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>  ProfilePage(),
+                        ),
+                      );
+                    }),
                 ListTile(
                     title: const Text("Logout"),
                     leading: const Icon(Icons.exit_to_app),
                     onTap: () async {
-                     await logOutFireBase();
-
-                      
+                      await logOutFireBase();
                     }),
               ],
             ),

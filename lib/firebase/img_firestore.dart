@@ -25,27 +25,25 @@ class GetImgFromFirestore extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;
-          return Container(
-            //  width: double.infinity,
-              child: Column(
-                children: [
-                  data['imgURL'].isNotEmpty?
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(data['imgURL']),
-                    backgroundColor: Colors.white,
-                   radius: 35,
-                  ):
-                      const CircleAvatar(
-                    backgroundImage:  AssetImage("lib/assets/img/avatar.png"),
-                    backgroundColor: Colors.white,
-                    radius: 60,
-                  ),
+          return Column(
+            children: [
+              data['imgURL'].isNotEmpty?
+              CircleAvatar(
+                backgroundImage: NetworkImage(data['imgURL']),
+                backgroundColor: Colors.white,
+               radius: 35,
+              ):
+                  const CircleAvatar(
+                backgroundImage:  AssetImage("lib/assets/img/avatar.png"),
+                backgroundColor: Colors.white,
+                radius: 60,
+              ),
 
 
 
 
-                ],
-              ));
+            ],
+          );
         }
 
         return const Text("loading");

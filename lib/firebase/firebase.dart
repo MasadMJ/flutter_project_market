@@ -6,47 +6,36 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_project_market/screens/home.dart';
- import 'package:path/path.dart' show basename;
-import '../screens/login.dart';
+import 'package:path/path.dart' show basename;
 import '../screens/verify_email.dart';
 import '../shared/snackbar.dart';
 
 final userINFO = FirebaseAuth.instance.currentUser!;
-  final userDB =
-      FirebaseFirestore.instance.collection('users');
-
-String myerror = "keychain-error";
-
+final userDB = FirebaseFirestore.instance.collection('users');
 
 
 registerToFireBase(
-    context, emailAddress, password, username, title, age,imgPath) async {
+    context, emailAddress, password, username, title, age, imgPath) async {
   try {
     final userINFO = await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: emailAddress,
       password: password,
-    
     );
-    String imgUrlUploaded=await uploadImgToFirestore(imgPath);
-    saveDataToStore(userINFO.user!.uid, emailAddress, password, username, title, age,imgUrlUploaded);
+    String imgUrlUploaded = await uploadImgToFirestore(imgPath);
+    saveDataToStore(userINFO.user!.uid, emailAddress, password, username, title,
+        age, imgUrlUploaded);
     showSnackBar(context, "Account Created");
     loginWithFireBase(context, emailAddress, password);
     // Navigator.pushReplacement(
     //     context, MaterialPageRoute(builder: (context) => const Login()));
   } on FirebaseAuthException catch (e) {
     late String error;
-    if (e.code == myerror) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const Login()));
-    }
     if (e.code == 'weak-password') {
       error = 'The password provided is too weak.';
     } else if (e.code == 'email-already-in-use') {
       error = 'The account already exists for that email.';
     } else {
       error = "Unknown Error ${e.code}";
-      print("${e.code}");
     }
     showSnackBar(context, error);
   }
@@ -57,13 +46,9 @@ loginWithFireBase(context, emailAddress, password) async {
     await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: emailAddress, password: password);
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const HomePage()));
+        context, MaterialPageRoute(builder: (context) => const VerifyEmailView()));
   } on FirebaseAuthException catch (e) {
     late String error;
-    if (e.code == myerror) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const HomePage()));
-    }
     if (e.code == 'user-not-found') {
       error = ('No user found for that email.');
     } else if (e.code == 'wrong-password') {
@@ -93,7 +78,6 @@ sendVerificationEmail(context) async {
     await userINFO.sendEmailVerification();
     await Future.delayed(Duration(seconds: 5));
   } catch (e) {
-    print(e);
     showSnackBar(context, e.toString());
   }
 }
@@ -118,7 +102,7 @@ getAuthInfo(type) {
   }
 }
 
-saveDataToStore(uid, email, password, username, title, age,imgURL) async {
+saveDataToStore(uid, email, password, username, title, age, imgURL) async {
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   users
       .doc(uid)
@@ -134,10 +118,7 @@ saveDataToStore(uid, email, password, username, title, age,imgURL) async {
       .catchError((error) => print("Failed to add user: $error"));
 }
 
-
-
-
-uploadImgToFirestore(String ImgPath) async {   
+uploadImgToFirestore(String ImgPath) async {
   String imgName = basename(ImgPath);
   int random = Random().nextInt(9999999);
   imgName = "$random$imgName";
@@ -145,45 +126,30 @@ uploadImgToFirestore(String ImgPath) async {
   await storageRef.putFile(File(ImgPath!));
   String url = await storageRef.getDownloadURL();
   return url;
-
 }
-
 
 //Delete a field in document [firestore]
-deleteField(field)  {
-     userDB.doc(userINFO!.uid).update({field: FieldValue.delete()});
+deleteField(field) {
+  userDB.doc(userINFO!.uid).update({field: FieldValue.delete()});
 }
 
-
-replaceIMG(String ImgPath)  async {
+replaceIMG(String ImgPath) async {
   String url = await uploadImgToFirestore(ImgPath);
-     userDB.doc(userINFO!.uid).update({"imgURL": url});
+  userDB.doc(userINFO!.uid).update({"imgURL": url});
 }
-
-
 
 //Delete a document [firestore]
-deleteDocAllDoc()  {
+deleteDocAllDoc() {
   userDB.doc(userINFO!.uid).delete();
 }
 
 //Delete user [firebase auth]
-deleteFirebaseAuth()  {
-     userINFO!.delete();
+deleteFirebaseAuth() {
+  userINFO!.delete();
 }
 
-
-
-
-
-
-
-
-
-
-
-
-Future<dynamic> getFieldFromDocument(String documentId, String fieldName) async {
+Future<dynamic> getFieldFromDocument(
+    String documentId, String fieldName) async {
   try {
     DocumentSnapshot snapshot = await FirebaseFirestore.instance
         .collection('users')
