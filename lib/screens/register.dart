@@ -1,6 +1,8 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 import '../shared/checks.dart';
 import '../shared/colors.dart';
 import '../shared/constant.dart';
@@ -22,6 +24,7 @@ class _RegisterState extends State<Register> {
   final titleController = TextEditingController();
   final ageController = TextEditingController();
   final usernameController = TextEditingController();
+  File? imgPath;
   bool uppercase = false;
   bool digits = false;
   bool lowercase = false;
@@ -56,6 +59,85 @@ class _RegisterState extends State<Register> {
     });
   }
 
+  
+  uploadImage2Screen(type) async {
+    final pickedImg =
+        await ImagePicker().pickImage(source: type);
+    try {
+      if (pickedImg != null) {
+        setState(() {
+          imgPath = File(pickedImg.path);
+        });
+      } else {
+        print("NO img selected");
+      }
+    } catch (e) {
+      print("Error => $e");
+    }
+  }
+
+
+   showmodel() {
+    return showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          padding: EdgeInsets.all(22),
+          height: 170,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () async {
+                  await uploadImage2Screen(ImageSource.camera);
+                },
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.camera,
+                      size: 30,
+                    ),
+                    SizedBox(
+                      width: 11,
+                    ),
+                    Text(
+                      "From Camera",
+                      style: TextStyle(fontSize: 20),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 22,
+              ),
+              GestureDetector(
+                onTap: () {
+                  uploadImage2Screen(ImageSource.gallery);
+                },
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.photo_outlined,
+                      size: 30,
+                    ),
+                    SizedBox(
+                      width: 11,
+                    ),
+                    Text(
+                      "From Gallery",
+                      style: TextStyle(fontSize: 20),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,6 +163,43 @@ class _RegisterState extends State<Register> {
                 key: _formKey,
                 child: Column(
                   children: [
+                    Container(
+                      padding: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle, color: Colors.grey),
+                      child: Stack(
+                        children: [
+                          (imgPath == null)
+                              ? CircleAvatar(
+                                  backgroundImage:
+                                      AssetImage("lib/assets/img/avatar.png"),
+                                  backgroundColor: Colors.white,
+                                  radius: 60,
+                                )
+                              : ClipOval(
+                                  child: Image.file(
+                                  imgPath!,
+                                  fit: BoxFit.cover,
+                                  width: 130,
+                                  height: 130,
+                                )),
+                          Positioned(
+                              right: -12,
+                              bottom: -15,
+                              child: IconButton(
+                                  onPressed: () {
+                                    showmodel();
+                                  },
+                                  icon: Icon(
+                                    Icons.photo_camera,
+                                    size: 30,
+                                  )))
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
                     TextFormField(
                         obscureText: false,
                         keyboardType: TextInputType.text,
@@ -188,9 +307,14 @@ class _RegisterState extends State<Register> {
                           setState(() {
                             isLoadding = !isLoadding;
                           });
-                          await registerToFireBase(context,
-                              emaillController.text, passwordController.text,usernameController.text,titleController.text,ageController.text);
-                                                   setState(() {
+                          await registerToFireBase(
+                              context,
+                              emaillController.text,
+                              passwordController.text,
+                              usernameController.text,
+                              titleController.text,
+                              ageController.text);
+                          setState(() {
                             isLoadding = !isLoadding;
                           });
                         } else {

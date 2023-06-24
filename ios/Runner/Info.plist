@@ -47,6 +47,13 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+    <key>NSCameraUsageDescription</key>
+    <string>Used to capture photos</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>Used to save photos to the photo library</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Used to access photos from the photo library</string>
+
     
     <key>CFBundleURLTypes</key>
     <array>
@@ -59,6 +66,8 @@
         </array>
       </dict>
     </array>
+    
+    
     
     
 </dict>
