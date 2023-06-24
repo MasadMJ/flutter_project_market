@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_market/screens/home.dart';
 import 'package:flutter_project_market/screens/verify_email.dart';
 import 'package:flutter_project_market/shared/snackbar.dart';
 import 'package:provider/provider.dart';

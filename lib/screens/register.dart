@@ -1,9 +1,6 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import '../shared/checks.dart';
 import '../shared/colors.dart';
 import '../shared/constant.dart';
@@ -80,7 +77,7 @@ class _RegisterState extends State<Register> {
       context: context,
       builder: (BuildContext context) {
         return Container(
-          padding: EdgeInsets.all(22),
+          padding: const EdgeInsets.all(22),
           height: 170,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -89,7 +86,7 @@ class _RegisterState extends State<Register> {
                 onTap: () async {
                   await uploadImage2Screen(ImageSource.camera);
                 },
-                child: Row(
+                child: const Row(
                   children: [
                     Icon(
                       Icons.camera,
@@ -105,14 +102,14 @@ class _RegisterState extends State<Register> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 22,
               ),
               GestureDetector(
                 onTap: () {
                   uploadImage2Screen(ImageSource.gallery);
                 },
-                child: Row(
+                child: const Row(
                   children: [
                     Icon(
                       Icons.photo_outlined,
@@ -141,7 +138,7 @@ class _RegisterState extends State<Register> {
       appBar: AppBar(
         backgroundColor: appbarGreen,
         centerTitle: false,
-        title: Text("Register"),
+        title: const Text("Register"),
         elevation: 0,
       ),
       body: Container(
@@ -161,13 +158,13 @@ class _RegisterState extends State<Register> {
                 child: Column(
                   children: [
                     Container(
-                      padding: EdgeInsets.all(5),
-                      decoration: BoxDecoration(
+                      padding: const EdgeInsets.all(5),
+                      decoration: const BoxDecoration(
                           shape: BoxShape.circle, color: Colors.grey),
                       child: Stack(
                         children: [
                           (imgPath == null)
-                              ? CircleAvatar(
+                              ? const CircleAvatar(
                                   backgroundImage:
                                       AssetImage("lib/assets/img/avatar.png"),
                                   backgroundColor: Colors.white,
@@ -188,14 +185,14 @@ class _RegisterState extends State<Register> {
                                     await showmodel();
                                     //  Navigator.pop(context);
                                   },
-                                  icon: Icon(
+                                  icon: const Icon(
                                     Icons.photo_camera,
                                     size: 30,
                                   )))
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     TextFormField(
@@ -270,7 +267,7 @@ class _RegisterState extends State<Register> {
                                       )
                                     : const Icon(Icons.visibility_off)),
                             hintText: "Enter your Password")),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     SizedBox(
@@ -295,7 +292,7 @@ class _RegisterState extends State<Register> {
                       child: checkWidgetPassword(
                           specialCharacters, "Has  Special Characters"),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     ElevatedButton(
