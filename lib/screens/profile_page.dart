@@ -131,46 +131,46 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(
-                child: Container(
-                  padding: EdgeInsets.all(5),
-                  decoration:
-                      BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
-                  child: Stack(
-                    children: [
-                      // (imgPath == null)
-                      //     ? CircleAvatar(
-                      //         backgroundImage:
-                      //             AssetImage("lib/assets/img/avatar.png"),
-                      //         backgroundColor: Colors.white,
-                      //         radius: 60,
-                      //       )
-                      //     :
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                   // width: 50,
+                    padding: EdgeInsets.all(5),
+                    decoration:
+                        BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // (imgPath == null)
+                        //     ? CircleAvatar(
+                        //         backgroundImage:
+                        //             AssetImage("lib/assets/img/avatar.png"),
+                        //         backgroundColor: Colors.white,
+                        //         radius: 60,
+                        //       )
+                        //     :
 
-                      GetImgFromFirestore(getAuthInfo("uid")),
+                        GetImgFromFirestore(getAuthInfo("uid")),
 
-                      // : ClipOval(
-                      //     child: Image.file(
-                      //     imgPath!,
-                      //     fit: BoxFit.cover,
-                      //     width: 130,
-                      //     height: 130,
-                      //   )),
-                      Positioned(
-                          right: 60,
-                          bottom: -10,
-                          child: IconButton(
-                              onPressed: () {
-                                showmodel();
-                              },
-                              icon: Icon(
-                                Icons.edit,
-                                size: 30,
-                              )))
-                    ],
+                        // : ClipOval(
+                        //     child: Image.file(
+                        //     imgPath!,
+                        //     fit: BoxFit.cover,
+                        //     width: 130,
+                        //     height: 130,
+                        //   )),
+                        
+                      ],
+                    ),
                   ),
-                ),
+                   IconButton(icon: Icon(Icons.edit),
+                                    onPressed: () {
+                                      showmodel();
+                                    }),
+                ],
               ),
+              
               SizedBox(
                 height: 15,
               ),
