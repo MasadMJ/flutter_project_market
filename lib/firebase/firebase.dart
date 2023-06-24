@@ -1,27 +1,35 @@
+import 'dart:io';
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_market/screens/home.dart';
-
+ import 'package:path/path.dart' show basename;
 import '../screens/login.dart';
 import '../screens/verify_email.dart';
-import 'snackbar.dart';
+import '../shared/snackbar.dart';
 
 final userINFO = FirebaseAuth.instance.currentUser!;
   final userDB =
       FirebaseFirestore.instance.collection('users');
 
 String myerror = "keychain-error";
+
+
+
 registerToFireBase(
-    context, emailAddress, password, username, title, age) async {
+    context, emailAddress, password, username, title, age,imgPath) async {
   try {
     final userINFO = await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: emailAddress,
       password: password,
     
     );
-    saveData(userINFO.user!.uid, emailAddress, password, username, title, age);
+    String imgUrlUploaded=await uploadImgToFirestore(imgPath);
+    saveDataToStore(userINFO.user!.uid, emailAddress, password, username, title, age,imgUrlUploaded);
     showSnackBar(context, "Account Created");
     loginWithFireBase(context, emailAddress, password);
     // Navigator.pushReplacement(
@@ -110,19 +118,34 @@ getAuthInfo(type) {
   }
 }
 
-saveData(uid, email, password, username, title, age) async {
+saveDataToStore(uid, email, password, username, title, age,imgURL) async {
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   users
       .doc(uid)
       .set({
         'email': email,
         'password': password,
+        'imgURL': imgURL,
         'username': username,
         'age': age,
-        'title': title
+        'title': title,
       })
       .then((value) => print("User Added"))
       .catchError((error) => print("Failed to add user: $error"));
+}
+
+
+
+
+uploadImgToFirestore(String ImgPath) async {   
+  String imgName = basename(ImgPath);
+  int random = Random().nextInt(9999999);
+  imgName = "$random$imgName";
+  final storageRef = FirebaseStorage.instance.ref("users-img/${imgName}");
+  await storageRef.putFile(File(ImgPath!));
+  String url = await storageRef.getDownloadURL();
+  return url;
+
 }
 
 
@@ -130,6 +153,13 @@ saveData(uid, email, password, username, title, age) async {
 deleteField(field)  {
      userDB.doc(userINFO!.uid).update({field: FieldValue.delete()});
 }
+
+
+replaceIMG(String ImgPath)  async {
+  String url = await uploadImgToFirestore(ImgPath);
+     userDB.doc(userINFO!.uid).update({"imgURL": url});
+}
+
 
 
 //Delete a document [firestore]
@@ -141,6 +171,11 @@ deleteDocAllDoc()  {
 deleteFirebaseAuth()  {
      userINFO!.delete();
 }
+
+
+
+
+
 
 
 

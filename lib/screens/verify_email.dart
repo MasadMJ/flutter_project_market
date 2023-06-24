@@ -7,7 +7,7 @@ import 'package:flutter_project_market/screens/login.dart';
 import 'package:flutter_project_market/shared/snackbar.dart';
 
 import '../shared/colors.dart';
-import '../shared/firebase.dart';
+import '../firebase/firebase.dart';
 
 class VerifyEmailView extends StatefulWidget {
   const VerifyEmailView({super.key});

@@ -6,10 +6,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_project_market/shared/firebase.dart';
+import 'package:flutter_project_market/firebase/firebase.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../clases/widget_datafirestore.dart';
+import '../firebase/data_firestore.dart';
+import '../firebase/img_firestore.dart';
 import '../shared/colors.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -24,16 +25,12 @@ class _ProfilePageState extends State<ProfilePage> {
   final dataFirestore = GetDataFromFirestore(getAuthInfo("uid"));
   File? imgPath;
 
-
-
   uploadImage2Screen(type) async {
-    final pickedImg =
-        await ImagePicker().pickImage(source: type);
+    final pickedImg = await ImagePicker().pickImage(source: type);
     try {
       if (pickedImg != null) {
-        setState(() {
-          imgPath = File(pickedImg.path);
-        });
+        imgPath = await replaceIMG(pickedImg.path);
+        setState(() {});
       } else {
         print("NO img selected");
       }
@@ -42,8 +39,7 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
-
-   showmodel() {
+  showmodel() {
     return showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -103,7 +99,6 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -136,45 +131,49 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-                Center(
-                  child: Container(
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle, color: Colors.grey),
-                        child: Stack(
-                          children: [
-                            (imgPath == null)
-                                ? CircleAvatar(
-                                    backgroundImage:
-                                        AssetImage("lib/assets/img/avatar.png"),
-                                    backgroundColor: Colors.white,
-                                    radius: 60,
-                                  )
-                                : ClipOval(
-                                    child: Image.file(
-                                    imgPath!,
-                                    fit: BoxFit.cover,
-                                    width: 130,
-                                    height: 130,
-                                  )),
-                            Positioned(
-                                right: -12,
-                                bottom: -15,
-                                child: IconButton(
-                                    onPressed: () {
-                                     showmodel();
-                                    },
-                                    icon: Icon(
-                                      Icons.photo_camera,
-                                      size: 30,
-                                    )))
-                          ],
-                        ),
-                      ),
+              Center(
+                child: Container(
+                  padding: EdgeInsets.all(5),
+                  decoration:
+                      BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
+                  child: Stack(
+                    children: [
+                      // (imgPath == null)
+                      //     ? CircleAvatar(
+                      //         backgroundImage:
+                      //             AssetImage("lib/assets/img/avatar.png"),
+                      //         backgroundColor: Colors.white,
+                      //         radius: 60,
+                      //       )
+                      //     :
+
+                      GetImgFromFirestore(getAuthInfo("uid")),
+
+                      // : ClipOval(
+                      //     child: Image.file(
+                      //     imgPath!,
+                      //     fit: BoxFit.cover,
+                      //     width: 130,
+                      //     height: 130,
+                      //   )),
+                      Positioned(
+                          right: 60,
+                          bottom: -10,
+                          child: IconButton(
+                              onPressed: () {
+                                showmodel();
+                              },
+                              icon: Icon(
+                                Icons.edit,
+                                size: 30,
+                              )))
+                    ],
+                  ),
                 ),
-                    SizedBox(
-                      height: 15,
-                    ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
               Center(
                   child: Container(
                 padding: EdgeInsets.all(11),

@@ -3,10 +3,11 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import '../shared/checks.dart';
 import '../shared/colors.dart';
 import '../shared/constant.dart';
-import '../shared/firebase.dart';
+import '../firebase/firebase.dart';
 import '../shared/snackbar.dart';
 import 'login.dart';
 
@@ -24,7 +25,7 @@ class _RegisterState extends State<Register> {
   final titleController = TextEditingController();
   final ageController = TextEditingController();
   final usernameController = TextEditingController();
-  File? imgPath;
+  String? imgPath;
   bool uppercase = false;
   bool digits = false;
   bool lowercase = false;
@@ -59,14 +60,12 @@ class _RegisterState extends State<Register> {
     });
   }
 
-  
   uploadImage2Screen(type) async {
-    final pickedImg =
-        await ImagePicker().pickImage(source: type);
+    final pickedImg = await ImagePicker().pickImage(source: type);
     try {
       if (pickedImg != null) {
         setState(() {
-          imgPath = File(pickedImg.path);
+          imgPath = pickedImg.path;
         });
       } else {
         print("NO img selected");
@@ -76,8 +75,7 @@ class _RegisterState extends State<Register> {
     }
   }
 
-
-   showmodel() {
+  showmodel() {
     return showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -137,7 +135,6 @@ class _RegisterState extends State<Register> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -178,7 +175,7 @@ class _RegisterState extends State<Register> {
                                 )
                               : ClipOval(
                                   child: Image.file(
-                                  imgPath!,
+                                  File(imgPath!),
                                   fit: BoxFit.cover,
                                   width: 130,
                                   height: 130,
@@ -187,8 +184,9 @@ class _RegisterState extends State<Register> {
                               right: -12,
                               bottom: -15,
                               child: IconButton(
-                                  onPressed: () {
-                                    showmodel();
+                                  onPressed: () async {
+                                    await showmodel();
+                                    //  Navigator.pop(context);
                                   },
                                   icon: Icon(
                                     Icons.photo_camera,
@@ -313,7 +311,8 @@ class _RegisterState extends State<Register> {
                               passwordController.text,
                               usernameController.text,
                               titleController.text,
-                              ageController.text);
+                              ageController.text,
+                              imgPath);
                           setState(() {
                             isLoadding = !isLoadding;
                           });

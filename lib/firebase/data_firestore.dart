@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_project_market/shared/firebase.dart';
+import 'package:flutter_project_market/firebase/firebase.dart';
 
 class GetDataFromFirestore extends StatefulWidget {
   final String documentId;
@@ -83,7 +83,6 @@ class _GetDataFromFirestoreState extends State<GetDataFromFirestore> {
 
   @override
   Widget build(BuildContext context) {
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
 
     return FutureBuilder<DocumentSnapshot>(
       future: users.doc(widget.documentId).get(),

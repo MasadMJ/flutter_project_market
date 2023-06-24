@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_market/shared/firebase.dart';
+import 'package:flutter_project_market/firebase/firebase.dart';
 import 'package:flutter_project_market/shared/snackbar.dart';
 import '../shared/checks.dart';
 import '../shared/colors.dart';

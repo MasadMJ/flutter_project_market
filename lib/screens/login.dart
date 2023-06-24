@@ -9,7 +9,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../provider/google_signin.dart';
 import '../shared/colors.dart';
 import '../shared/constant.dart';
-import '../shared/firebase.dart';
+import '../firebase/firebase.dart';
 import 'home.dart';
 import 'register.dart';
 import 'package:provider/provider.dart';

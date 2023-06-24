@@ -4,10 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 
+import '../firebase/img_firestore.dart';
+import '../firebase/name_firestore.dart';
 import '../shared/iteam_card.dart';
 import '../shared/appbar.dart';
 import '../shared/colors.dart';
-import '../shared/firebase.dart';
+import '../firebase/firebase.dart';
 import '../shared/iteams_list.dart';
 import 'checkout.dart';
 import 'details_screen.dart';
@@ -21,28 +23,25 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       drawer: Drawer(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
               children: [
                  UserAccountsDrawerHeader(
-                  accountName: Text(
-                    "${getAuthInfo("name")}",
-                    style: TextStyle(fontSize: 20, color: Colors.white),
-                  ),
+                  accountName: GetNameFromFirestore(getAuthInfo("uid")),
+            
                   accountEmail: Text(
                     "${getAuthInfo("email")}",
                     style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
-                  currentAccountPicture: CircleAvatar(
-                    backgroundImage: AssetImage("lib/assets/img/avatar.jpg"),
-                    radius: 55,
-                  ),
+                  currentAccountPicture: GetImgFromFirestore(getAuthInfo("uid")),
+                // currentAccountPictureSize: Size(100, 80),
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage("lib/assets/img/background.jpg"),
                           fit: BoxFit.cover)),
-                ),
+                               ),
+                
                 ListTile(
                     title: const Text("Home"),
                     leading: const Icon(Icons.home),
